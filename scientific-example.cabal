@@ -20,6 +20,7 @@ executable scientific-example
   main-is: Main.hs
   other-modules:
       Library.ArbitraryPrecision
+      Library.DomainModel
       Library.JsonValidation
       Paths_scientific_example
   hs-source-dirs:

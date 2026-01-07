@@ -5,7 +5,7 @@ module Main where
 import Data.Aeson
 import Data.Scientific
 import qualified Data.ByteString.Lazy.Char8 as BL
-import Library.ArbitraryPrecision
+import Library.DomainModel
 import Library.JsonValidation
 
 main :: IO ()
@@ -28,8 +28,6 @@ main =
     print (floatingOrInteger c :: Either Double Integer)
     putStrLn "\nCoefficient and exponent:"
     print (coefficient b, base10Exponent b)
-    putStrLn "\nConversion:"
-    print $ roundTo 2 a
 
     runExample "valid amount" json1
     runExample "too many decimals" json2
