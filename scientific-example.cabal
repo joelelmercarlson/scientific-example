@@ -6,8 +6,12 @@ cabal-version: 1.12
 
 name:           scientific-example
 version:        0.1.0.0
+description:    scientific numbers
 homepage:       https://github.com/joelelmercarlson/scientific-example#readme
 bug-reports:    https://github.com/joelelmercarlson/scientific-example/issues
+author:         Joel E Carlson
+maintainer:     <joel.elmer.carlson@outlook.com>
+copyright:      2026 Joel E Carlson
 license:        GPL
 license-file:   LICENSE
 build-type:     Simple
@@ -16,12 +20,12 @@ source-repository head
   type: git
   location: https://github.com/joelelmercarlson/scientific-example
 
-executable scientific-example
-  main-is: Main.hs
-  other-modules:
+library
+  exposed-modules:
       Library.ArbitraryPrecision
       Library.DomainModel
       Library.JsonValidation
+  other-modules:
       Paths_scientific_example
   hs-source-dirs:
       src
@@ -32,4 +36,15 @@ executable scientific-example
     , containers
     , scientific
     , text
+  default-language: Haskell2010
+
+executable scientific-example
+  main-is: Main.hs
+  other-modules:
+      Paths_scientific_example
+  hs-source-dirs:
+      app
+  build-depends:
+      base
+    , scientific-example
   default-language: Haskell2010

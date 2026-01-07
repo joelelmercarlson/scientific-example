@@ -17,6 +17,9 @@ data Transaction = Transaction
 instance FromJSON Transaction
 instance ToJSON   Transaction
 
+mkTransaction :: Scientific -> Transaction
+mkTransaction t = Transaction { amount = t, taxRate = 0.075 }
+
 -- Domain rule: total = amount + (amount * taxRate)
 total :: Transaction -> Scientific
 total t = amount t + (amount t * taxRate t)

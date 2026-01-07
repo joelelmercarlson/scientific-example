@@ -1,17 +1,27 @@
 name:    scientific-example
 version: 0.1.0.0
+author: Joel E Carlson
+maintainer: <joel.elmer.carlson@outlook.com>
+copyright: 2026 Joel E Carlson
 github:  "joelelmercarlson/scientific-example"
+description: scientific numbers
 license: GPL
 extra-source-files: []
+
+library:
+  source-dirs: src
+  dependencies:
+    - base
+    - aeson
+    - bytestring
+    - containers
+    - scientific
+    - text
 
 executables:
   scientific-example:
     main: Main.hs
-    source-dirs: src
+    source-dirs: app
     dependencies:
+     - scientific-example
      - base
-     - aeson
-     - bytestring
-     - containers
-     - scientific
-     - text

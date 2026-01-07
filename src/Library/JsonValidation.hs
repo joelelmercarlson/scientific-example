@@ -5,8 +5,11 @@ module Library.JsonValidation where
 import Data.Aeson
 import Data.Scientific
 import Data.Text (Text)
+import qualified Data.Text as T
 import qualified Data.Aeson.Key as Key
 import qualified Data.Aeson.KeyMap as KM
+import qualified Data.ByteString.Lazy.Char8 as BL
+import Library.DomainModel
 
 data ValidationError
   = MissingField Text
@@ -15,6 +18,15 @@ data ValidationError
   | TooManyDecimals Text
   deriving (Show)
 
+runExample :: Text -> IO ()
+runExample raw = do
+  case decode (BL.pack $ T.unpack raw) :: Maybe Value of
+    Nothing -> putStrLn "Invalid JSON"
+    Just v ->
+      case validateAmount v of
+        Right amt -> putStrLn $ "Valid amount: " ++ show amt ++  ", "  ++ (show $ mkTransaction amt)
+        Left err -> putStrLn $ "Validation Error: " ++ show err
+  
 validateAmount :: Value -> Either ValidationError Scientific
 validateAmount (Object o) =
   case KM.lookup (Key.fromText "amount") o of
