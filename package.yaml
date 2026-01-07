@@ -13,6 +13,5 @@ executables:
      - aeson
      - bytestring
      - containers
-     - unordered-containers
      - scientific
      - text
