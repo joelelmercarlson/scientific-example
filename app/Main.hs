@@ -13,7 +13,7 @@ import Library.JsonValidation
 
 main :: IO ()
 main =
-  let json1 = "{\"amount\": 1e6}"
+  let json1 = "{\"amount\": 1e4}"
       json2 = "{\"amount\": 123.3456}"
       json3 = "{\"amount\": -1.0}"
       json4 = "{\"value\": 10}"
