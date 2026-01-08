@@ -1,4 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-
+
+Main.hs
+
+Author: "Joel E Carlson" <joel.elmer.carlson@outlook.com>
+
+-}
 
 module Main where
 
@@ -6,7 +13,7 @@ import Library.JsonValidation
 
 main :: IO ()
 main =
-  let json1 = "{\"amount\": 123.45}"
+  let json1 = "{\"amount\": 1e6}"
       json2 = "{\"amount\": 123.3456}"
       json3 = "{\"amount\": -1.0}"
       json4 = "{\"value\": 10}"
