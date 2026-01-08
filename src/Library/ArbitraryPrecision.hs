@@ -1,9 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
+{- 
+
+ArbitraryPrecision.hs
+
+Author: "Joel E Carlson" <joel.elmer.carlson@outlook.com>
+
+-}
 
 module Library.ArbitraryPrecision where
 
 import Data.Scientific
 import qualified Data.Scientific as S
+
+decimalPlaces :: Scientific -> Int
+decimalPlaces s =
+  let e = base10Exponent s
+  in if e >= 0 then 0 else negate e
 
 mul :: Scientific -> Scientific -> Scientific
 mul = (*)
@@ -22,20 +34,3 @@ roundTo :: Int -> Scientific -> Scientific
 roundTo n x =
   let factor = 10 ^^ n
   in fromInteger (round (x * factor)) / factor
-
--- | Scientific numbers
-runDemo :: IO ()
-runDemo =
-  let a = scientific 1245 0
-      b = scientific 1245 (-2)
-      c = read "1.2345e10" :: Scientific
-  in do
-    putStrLn "Basic Scientific values:"
-    print a
-    print b
-    print c
-    putStrLn "\nConversion:"
-    print (toRealFloat c :: Double)
-    print (floatingOrInteger c :: Either Double Integer)
-    putStrLn "\nCoefficient and exponent:"
-    print (coefficient b, base10Exponent b)
