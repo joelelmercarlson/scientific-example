@@ -16,6 +16,7 @@ library:
     - bytestring
     - containers
     - scientific
+    - time
     - text
 
 executables:

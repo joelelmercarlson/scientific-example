@@ -27,10 +27,10 @@ instance ToJSON   Transaction
 -- | future value
 drawDownAmount :: Scientific -> [Scientific]
 drawDownAmount 0 = []
-drawDownAmount x =
+drawDownAmount s =
   let growth = scientific 7 (-2)
       rate   = scientific 4 (-2)
-      period = x * (1 + growth - rate)
+      period = s * (1 + growth - rate)
   in period : drawDownAmount period
 
 -- | future value
@@ -41,9 +41,12 @@ drawDownModel t =
       nxt = mkTransaction amt
   in nxt : drawDownModel nxt
   
+futureValue :: Scientific -> Int -> Scientific
+futureValue s p = s * (1.0 + 0.075) ^^ p
+
 mkTransaction :: Scientific -> Transaction
-mkTransaction t = Transaction {
-  amount = t
+mkTransaction s = Transaction {
+  amount = s
   , growthRate = scientific 7 (-2)
   , taxRate = scientific 4 (-2)
   }

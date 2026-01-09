@@ -36,6 +36,7 @@ library
     , containers
     , scientific
     , text
+    , time
   default-language: Haskell2010
 
 executable scientific-example
