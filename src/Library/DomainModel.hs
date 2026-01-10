@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 {- 
 
 DomainModel.hs
@@ -17,39 +18,40 @@ import Library.ArbitraryPrecision
 
 data Transaction = Transaction
   { amount     :: Scientific
+  , delta      :: Scientific
   , growthRate :: Scientific
   , taxRate    :: Scientific  -- e.g., 0.075 for 7.5%
+  , timePeriod :: Int
   } deriving (Show, Generic)
 
 instance FromJSON Transaction
 instance ToJSON   Transaction
 
 -- | future value
-drawDownAmount :: Scientific -> [Scientific]
-drawDownAmount 0 = []
-drawDownAmount s =
-  let growth = scientific 7 (-2)
-      rate   = scientific 4 (-2)
-      period = s * (1 + growth - rate)
-  in period : drawDownAmount period
-
--- | future value
 drawDownModel :: Transaction -> [Transaction]
-drawDownModel (Transaction 0 _ _ ) = []
-drawDownModel t =
-  let amt = (amount t) * (1.0 + (growthRate t) - (taxRate t))
-      nxt = mkTransaction amt
+drawDownModel (Transaction 0 _ _ _ _) = []
+drawDownModel Transaction{..} =
+  let nxt = mkTransaction' (1 + timePeriod) amount
   in nxt : drawDownModel nxt
   
 futureValue :: Scientific -> Int -> Scientific
 futureValue s p = s * (1.0 + 0.075) ^^ p
 
 mkTransaction :: Scientific -> Transaction
-mkTransaction s = Transaction {
-  amount = s
-  , growthRate = scientific 7 (-2)
-  , taxRate = scientific 4 (-2)
-  }
+mkTransaction = mkTransaction' 0
+
+mkTransaction' :: Int -> Scientific -> Transaction
+mkTransaction' t s =
+  let fv     = s * (1.0 + growth - tax)
+      dt     = fv - s
+      growth = scientific 7 (-2)
+      tax    = scientific 4 (-2)
+  in Transaction { amount     = fv
+                 , delta      = dt
+                 , growthRate = growth
+                 , taxRate    = tax
+                 , timePeriod = t
+                 }
 
 -- Domain rule: total = amount + (amount * taxRate)
 total :: Transaction -> Scientific
