@@ -38,7 +38,7 @@ runExample raw = do
       case validateAmount v of
         Right amt -> do
           putStrLn $ "Valid amount: " ++ show amt
-          putStrLn $ "Future value: " ++ (show $ futureValue amt 5)
+          putStrLn $ "Future value: " ++ (show $ futureValue amt 7 5)
           print $ take 5 $ drawDownModel $ mkTransaction amt
         Left err -> putStrLn $ "Validation Error: " ++ show err
   
