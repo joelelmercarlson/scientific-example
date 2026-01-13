@@ -34,10 +34,8 @@ drawDownModel Transaction{..} =
   let nxt = mkTransaction' (1 + timePeriod) amount
   in nxt : drawDownModel nxt
   
-futureValue :: Scientific -> Integer -> Int -> Scientific
-futureValue s r p = s * (1.0 + rate) ^^ p
-  where
-    rate = scientific r (-2)
+futureValue :: Scientific -> Scientific -> Int -> Scientific
+futureValue s r p = s * (1.0 + r) ^^ p
 
 mkTransaction :: Scientific -> Transaction
 mkTransaction = mkTransaction' 0

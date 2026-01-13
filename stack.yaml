@@ -1,5 +1,5 @@
 # stack.yaml - <https://www.stackage.org/>
-resolver: lts-24.27
+resolver: lts-24.28
 flags: {}
 extra-package-dbs: []
 packages:
