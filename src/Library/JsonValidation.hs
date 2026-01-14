@@ -28,8 +28,8 @@ data ValidationError
   deriving (Show)
 
 runExample :: Text -> IO ()
-runExample raw = do
-  utcTime <- getCurrentTime
+runExample raw =
+  getCurrentTime >>= \utcTime -> do
   let tm = formatTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" utcTime
   putStrLn $ tm
   case decode (BL.pack $ T.unpack raw) :: Maybe Value of
