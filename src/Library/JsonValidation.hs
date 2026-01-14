@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 {-
 
 JsonValidation.hs
@@ -19,6 +20,7 @@ import qualified Data.Aeson.KeyMap as KM
 import qualified Data.ByteString.Lazy.Char8 as BL
 import Library.ArbitraryPrecision
 import Library.DomainModel
+import Library.JsonLoader (Amount(..))
 
 data ValidationError
   = MissingField Text
@@ -27,20 +29,22 @@ data ValidationError
   | TooManyDecimals Text
   deriving (Show)
 
-runExample :: Text -> IO ()
-runExample raw =
+runAmount :: Amount -> IO ()
+runAmount Amount{..} =
   getCurrentTime >>= \utcTime -> do
   let tm = formatTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" utcTime
   putStrLn $ tm
+  putStrLn $ "Future Value: " ++ (show $ futureValue amount 0.07 5)
+  print $ take 5 $ drawDownModel $ mkTransaction amount
+
+runExample :: Text -> IO ()
+runExample raw = do
   case decode (BL.pack $ T.unpack raw) :: Maybe Value of
     Nothing -> putStrLn "Invalid JSON"
     Just v ->
       case validateAmount v of
-        Right amt -> do
-          putStrLn $ "Valid amount: " ++ show amt
-          putStrLn $ "Future value: " ++ (show $ futureValue amt 0.07 5)
-          print $ take 5 $ drawDownModel $ mkTransaction amt
-        Left err -> putStrLn $ "Validation Error: " ++ show err
+        Right amt -> putStrLn $ "Valid amount: " ++ show amt
+        Left err  -> putStrLn $ "Validation Error: " ++ show err
   
 validateAmount :: Value -> Either ValidationError Scientific
 validateAmount (Object o) =
