@@ -1,7 +1,7 @@
 #!/usr/bin/env stack
 {- stack
 --system-ghc
---resolver lts-24.27 script
+--resolver lts-24.28 script
 --package scientific
 -}
 module Main where
