@@ -12,11 +12,6 @@ module Library.ArbitraryPrecision where
 import Data.Scientific
 import qualified Data.Scientific as S
 
-decimalPlaces :: Scientific -> Int
-decimalPlaces s =
-  let e = base10Exponent s
-  in if e >= 0 then 0 else negate e
-
 mul :: Scientific -> Scientific -> Scientific
 mul = (*)
 
