@@ -9,6 +9,7 @@ Author: "Joel E Carlson" <joel.elmer.carlson@outlook.com>
 -}
 module Library.JsonValidation where
 
+import Prelude hiding (lookup)
 import Data.Aeson
 import Data.Scientific
 import Data.Text (Text)
