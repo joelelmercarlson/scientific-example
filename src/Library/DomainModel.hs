@@ -13,7 +13,6 @@ module Library.DomainModel where
 import GHC.Generics
 import Data.Aeson
 import Data.Scientific
-import qualified Data.Scientific as S
 import Library.ArbitraryPrecision
 
 data Transaction = Transaction
