@@ -20,7 +20,6 @@ import qualified Control.Exception as Exception
 import Data.Aeson
 import qualified Data.ByteString.Lazy as BS
 import Data.Scientific
-import Data.Text (Text)
 import Data.Time
 import GHC.Generics (Generic)
 import Library.DomainModel
