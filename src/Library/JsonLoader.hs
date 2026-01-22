@@ -22,7 +22,6 @@ import qualified Data.ByteString.Lazy as BS
 import Data.Scientific
 import Data.Text (Text)
 import Data.Time
-import Data.Time.Clock.POSIX
 import GHC.Generics (Generic)
 import Library.DomainModel
 
