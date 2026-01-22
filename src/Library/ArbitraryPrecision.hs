@@ -9,7 +9,6 @@ Author: "Joel E Carlson" <joel.elmer.carlson@outlook.com>
 module Library.ArbitraryPrecision where
 
 import Data.Scientific
-import qualified Data.Scientific as S
 
 mul :: Scientific -> Scientific -> Scientific
 mul = (*)
