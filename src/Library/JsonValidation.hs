@@ -16,7 +16,6 @@ import Data.Text (Text)
 import qualified Data.Aeson.Key as Key
 import qualified Data.Aeson.KeyMap as KM
 import qualified Data.ByteString.Lazy.Char8 as BL
-import Library.DomainModel
 
 data ValidationError
   = MissingField Text
