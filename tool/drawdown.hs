@@ -1,9 +1,6 @@
 #!/usr/bin/env stack
 {-
-stack
---system-ghc
---resolver lts-24.28 script
---package time
+stack --system-ghc --resolver lts-24.29 script --package time
 -}
 
 module Main (
