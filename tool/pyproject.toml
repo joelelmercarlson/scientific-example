@@ -1,0 +1,12 @@
+[project]
+name = "arrow-tools"
+version = "0.1.0"
+description = "tools"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fpdf>=1.7.2",
+    "markdown>=3.10.1",
+    "numpy>=2.4.1",
+    "ruff>=0.14.14",
+]
