@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Ticker</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .ticker { font-size: 20px; margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <h1>Live Stock Ticker</h1>
+
+    <div id="prices"></div>
+
+    <script>
+        async function loadPrices() {
+            const res = await fetch("/prices");
+            const data = await res.json();
+
+            let html = "";
+            for (const [ticker, price] of Object.entries(data)) {
+                const text = price === null
+                    ? `${ticker}: N/A`
+                    : `${ticker}: $${price.toFixed(2)}`;
+                html += `<div class="ticker">${text}</div>`;
+            }
+            document.getElementById("prices").innerHTML = html;
+        }
+
+        loadPrices();
+        setInterval(loadPrices, 5000); // refresh every 5 seconds
+    </script>
+</body>
+</html>

@@ -1,19 +1,21 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
+#     "flask>=3.1.2",
 #     "yfinance>=1.1.0",
 # ]
 # ///
-import time
+from flask import Flask, render_template, jsonify
 import yfinance as yf
-import os
 
 __author__  = "Joel E Carlson"
 __credits__ = [ "joel.elmer.carlson@outlook.com" ]
 __email__   = __credits__[0]
 
+app = Flask(__name__)
+
 TICKERS = ["QQQ", "SPY"] # ETF
-REFRESH_SECONDS = 5      # 5 sec
+REFRESH_SECONDS = 60     # 1 minute
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -25,18 +27,17 @@ def get_price(ticker: str) -> float:
         return None
     return float(info["Close"].iloc[-1])
 
-def main():
-    while True:
-        clear()
-        print("Live Stock Ticker\n")
-        for t in TICKERS:
-            price = get_price(t)
-            if price is None:
-                print(f"{t}: N/A")
-            else:
-                print(f"{t}: ${price:,.2f}")
-        print(f"\nUpdated every {REFRESH_SECONDS} seconds. Ctrl+C to exit.")
-        time.sleep(REFRESH_SECONDS)
+@app.route("/")
+def index():
+    return render_template("ticker.html", tickers=TICKERS)
+
+@app.route("/prices")
+def prices():
+    results = {}
+    for t in TICKERS:
+        price = get_price(t)
+        results[t] = price
+    return jsonify(results)
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
