@@ -15,7 +15,7 @@ __email__   = __credits__[0]
 app = Flask(__name__)
 
 TICKERS = ["QQQ", "SPY"] # ETF
-REFRESH_SECONDS = 60     # 1 minute
+REFRESH_SECONDS = 5      # 5 seconds
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
