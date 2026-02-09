@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Ticker</title>
-    <link rel="style" href="clean.css">
+  <title>Stock Ticker</title>
+  <link rel="style" href="clean.css">
+  <style>
+    .canvas-row {
+	display: flex;
+	gap: 1rem;
+	flex: 1;
+	height: 300px; // set height explicitly
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <canvas id="myChart"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <div class="canvas-row">
+    <canvas id="chart1"></canvas>
+    <canvas id="chart2"></canvas>
+  </div>
 
-    <script>
-      const ctx = document.getElementById('myChart').getContext('2d');
-      const chart = new Chart(ctx, {
-	  type: 'line',
-	  data: {
-	      labels: [],
-	      datasets: [{
-		  label: 'SPY Price',
-		  data: [],
-		  borderColor: 'rgb(75, 192, 192)',
-		  tension: 0.2
-	      }]
-	  },
-	  options: {
-	      animation: false,
-	      scales: {
-		  x: { title: { display: true, text: 'Time' }},
-		  y: { title: { display: true, text: 'Price ($)' }}
-	      }
-	  }
-      });
+<script>
+    const ctx1 = document.getElementById('chart1').getContext('2d');
+    const chart1 = new Chart(ctx1, {
+	type: 'line',
+	data: {
+	    labels: [],
+	    datasets: [
+		{ label: 'SPY', data: [], borderColor: 'rgb(75,192,192)', tension: 0.2}
+	    ]},
+	options: {
+	    animation: false
+	}
+    });
 
-      async function updateChart() {
-	  const res = await fetch("/prices");
-	  const data = await res.json();
-	  const price = data["SPY"]; // pick your ticker
-	  const now = new Date().toLocaleTimeString();
+    const ctx2 = document.getElementById('chart2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+	type: 'line',
+	data: {
+	    labels: [],
+	    datasets: [
+		{ label: 'QQQ', data: [], borderColor: 'rgb(75,192,192)', tension: 0.2}
+	    ]},
+	options: {
+	    animation: false,
+	}
+    });
 
-	  chart.data.labels.push(now);
-	  chart.data.datasets[0].data.push(price);
+    async function updateChart() {
+	const res = await fetch("/prices");
+	const data = await res.json();
+	const now = new Date().toLocaleTimeString();
 
-	  if (chart.data.labels.length > 50) {
-	      chart.data.labels.shift();
-	      chart.data.datasets[0].data.shift();
-	  }
-	  chart.update();
-      }
-      setInterval(updateChart, 5000); // refresh every 5 seconds
-    </script>
+	chart1.data.labels.push(now);
+	chart1.data.datasets[0].data.push(data["SPY"]);
+	chart2.data.labels.push(now);
+	chart2.data.datasets[0].data.push(data["QQQ"]);
+
+	if (chart1.data.labels.length > 50) {
+	    // chart1
+	    chart1.data.labels.shift();
+	    chart1.data.datasets[0].data.shift();
+	    // chart2
+	    chart2.data.labels.shift();
+	    chart2.data.datasets[0].data.shift();
+	}
+	chart1.update();
+	chart2.update();
+    }
+    setInterval(updateChart, 5000); // refresh every 5 seconds
+</script>
 
 </body>
 </html>
