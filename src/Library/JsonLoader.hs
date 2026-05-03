@@ -26,6 +26,7 @@ import Library.DomainModel
 
 data Amount = Amount
   { amount :: Scientific
+  , periods :: Int
   } deriving (Show, Eq, Generic)
 
 instance ToJSON Amount
@@ -46,5 +47,4 @@ runAmount Amount{..} =
   getCurrentTime >>= \utcTime -> do
   let tm = formatTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" utcTime
   putStrLn $ tm
-  putStrLn $ "Future Value: " ++ (show $ futureValue amount 0.07 5)
-  print $ take 5 $ drawDownModel $ mkTransaction amount
+  print $ take periods $ drawDownModel $ mkTransaction amount
