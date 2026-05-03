@@ -27,7 +27,7 @@ packages:
     hackage: sdl2-ttf-2.1.3@sha256:46b4769918ee2e579d0e378ede559729293d1b9dfb5301d29efcf0470b553aa6,1916
 snapshots:
 - completed:
-    sha256: 655e468f774beee1badf07dc4c45fb50288d5c66ce7bef6f487b7f92891a90b0
-    size: 728965
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/24/37.yaml
-  original: lts-24.37
+    sha256: 91dfbdf885fb0110f0e63cdba42e13ff375dc7efc2f69f02d238b31ca3c1064f
+    size: 728778
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/24/39.yaml
+  original: lts-24.39
