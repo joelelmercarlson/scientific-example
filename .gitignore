@@ -32,3 +32,5 @@ cabal.project.local~
 
 # gamedata
 node_modules/*
+
+*.lock
